@@ -1,0 +1,96 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: EnvironmentShaderVariants
+  m_Shaders:
+  - first: {fileID: 4800000, guid: 2662b10ea40157c4b8885f2a4369d0de, type: 3}
+    second:
+      variants:
+      - keywords: FOG_LINEAR _LIGHTMAP _USENORMAL _USEREFL
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _USENORMAL _USEREFL
+        passType: 4
+      - keywords: FOG_LINEAR _LIGHTMAP _RECEIVESHADOW _USENORMAL _USEREFL
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _RECEIVESHADOW _USENORMAL _USEREFL
+        passType: 4
+      - keywords: FOG_LINEAR _LIGHTMAP _SOFTSHADOW _USENORMAL _USEREFL
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _SOFTSHADOW _USENORMAL _USEREFL
+        passType: 4
+      - keywords: FOG_LINEAR _LIGHTMAP _RECEIVESHADOW _SOFTSHADOW _USENORMAL _USEREFL
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _RECEIVESHADOW _SOFTSHADOW _USENORMAL
+          _USEREFL
+        passType: 4
+  - first: {fileID: 4800000, guid: 4266d5b19c7828b4183fdd12404461c0, type: 3}
+    second:
+      variants:
+      - keywords: FOG_LINEAR _LIGHTMAP _SPLATX4 _USENORMAL
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _SPLATX4 _USENORMAL
+        passType: 4
+      - keywords: FOG_LINEAR _LIGHTMAP _RECEIVESHADOW _SPLATX4 _USENORMAL
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _RECEIVESHADOW _SPLATX4 _USENORMAL
+        passType: 4
+      - keywords: FOG_LINEAR _LIGHTMAP _SPLATX4 _USENORMAL _USEVERTEXCOLOR_ON
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _SPLATX4 _USENORMAL _USEVERTEXCOLOR_ON
+        passType: 4
+      - keywords: FOG_LINEAR _LIGHTMAP _RECEIVESHADOW _SPLATX4 _USENORMAL _USEVERTEXCOLOR_ON
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _RECEIVESHADOW _SPLATX4 _USENORMAL
+          _USEVERTEXCOLOR_ON
+        passType: 4
+  - first: {fileID: 4800000, guid: 6ef404251bdd3b24b9aa93f3b631ca0e, type: 3}
+    second:
+      variants:
+      - keywords: 
+        passType: 4
+      - keywords: FOG_LINEAR _LIGHTMAP _USENORMAL
+        passType: 4
+  - first: {fileID: 4800000, guid: 91587be320e49bc4387364f4da955702, type: 3}
+    second:
+      variants:
+      - keywords: FOG_LINEAR _LIGHTMAP _Unlit
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _Unlit
+        passType: 4
+  - first: {fileID: 4800000, guid: 94bb2e6e84af6c74b97453a53ded4df4, type: 3}
+    second:
+      variants:
+      - keywords: FOG_LINEAR _ALPHA _LIGHTMAP _Unlit
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _ALPHA _LIGHTMAP _Unlit
+        passType: 4
+  - first: {fileID: 4800000, guid: a2b7fceef3631804a88b1dd7d2ebb9ad, type: 3}
+    second:
+      variants:
+      - keywords: FOG_LINEAR _LIGHTMAP _USENORMAL
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _USENORMAL
+        passType: 4
+      - keywords: FOG_LINEAR _LIGHTMAP _RECEIVESHADOW _USENORMAL
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _RECEIVESHADOW _USENORMAL
+        passType: 4
+  - first: {fileID: 4800000, guid: e69c0ed7a6ea5fd47bf33e3a274502e0, type: 3}
+    second:
+      variants:
+      - keywords: FOG_LINEAR _LIGHTMAP _MULTIUVTYPE_B _SPLATX2 _USENORMAL
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _LIGHTMAP _MULTIUVTYPE_B _SPLATX2 _USENORMAL
+        passType: 4
+  - first: {fileID: 4800000, guid: 5641a93a1eb806b4c9eb07aba94f5b54, type: 3}
+    second:
+      variants:
+      - keywords: FOG_LINEAR _ALPHA _Unlit
+        passType: 4
+      - keywords: FOG_LINEAR INSTANCING_ON _ALPHA _Unlit
+        passType: 4

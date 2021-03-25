@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!200 &20000000
+ShaderVariantCollection:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: PreloadShaderVariants
+  m_Shaders:
+  - first: {fileID: 10750, guid: 0000000000000000f000000000000000, type: 0}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 1ab423718a0a5c0409924b9ea39b40fe, type: 3}
+    second:
+      variants:
+      - keywords: INSTANCING_ON
+        passType: 0
+  - first: {fileID: 4800000, guid: 8dde6735105f54d4c9467374d0cc4325, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: e7455c18695b588439d1f884159902ed, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 4e6660f8c01a65c4cbe400ac90ff65ed, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: e6d4dff9b8603bb478f74c04ca70c07c, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: 024ea1ab39dc1be4ea733399f5ee936c, type: 3}
+    second:
+      variants: []
+  - first: {fileID: 4800000, guid: e7b67c9f61d59bb4dbe6cc62fe700322, type: 3}
+    second:
+      variants: []

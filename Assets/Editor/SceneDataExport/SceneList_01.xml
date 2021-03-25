@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfString>
+  <string>Assets/World/world01/01_Desert_Area/Desert_Area_Lightmap.unity</string>
+  <string>Assets/World/world01/02_Port_Area/Port_Area_Lightmap.unity</string>
+  <string>Assets/World/world01/03_School_Area/School_Area_Lightmap.unity</string>
+  <string>Assets/World/world01/04_City_Area/City_Area_Lightmap.unity</string>
+  <string>Assets/World/world01/05_Farm_Area/Farm_Area_Lightmap.unity</string>
+  <string>Assets/World/world01/06_Jungle_Area/Jungle_Area_Lightmap.unity</string>
+  <string>Assets/World/world01/07_Warehouse_Area/Warehouse_Area_Lightmap.unity</string>
+</ArrayOfString>
