@@ -11,6 +11,9 @@ namespace OmegaEditor
 {
     public static class TerrainUtils
     {
+        /// <summary>
+        /// 生成splat map及 terrianmesh，并创建material进行关联
+        /// </summary>
         [MenuItem("Tools/TerrainTools/ExportTerrain")]
         static void ExportTerrain()
         {
@@ -78,7 +81,9 @@ namespace OmegaEditor
                 importer.SaveAndReimport();
             }
         }
-
+        /// <summary>
+        /// terrian 导出mesh 并在指定的目录
+        /// </summary>
         [MenuItem("Tools/TerrainTools/ExportTerrainToFolder")]
         static void ExportTerrainToFolder()
         {
@@ -101,7 +106,9 @@ namespace OmegaEditor
             }
             AssetDatabase.Refresh();
         }
-
+        /// <summary>
+        /// 导出道路
+        /// </summary>
         [MenuItem("Tools/TerrainTools/ExportRoads")]
         static void ExportRoads()
         {
@@ -128,7 +135,9 @@ namespace OmegaEditor
             return Enumerable.Range(0, terrainData.alphamapLayers - 1)
                     .Select((idx) => (idx, terrainData.GetAlphamapTexture(idx)));
         }
-
+        /// <summary>
+        /// 创建Terrian的prefab
+        /// </summary>
         [MenuItem("Tools/TerrainTools/CreateTerrainPrefabs")]
         public static void CreatePrefab()
         {
@@ -171,7 +180,9 @@ namespace OmegaEditor
                 }
             }
         }
-
+        /// <summary>
+        /// 导出小地图纹理
+        /// </summary>
         [MenuItem("Tools/TerrainTools/CaptureSmallMap")]
         public static void CaptureSmallMap()
         {
@@ -183,7 +194,9 @@ namespace OmegaEditor
             target.Dump(path);
             RenderTexture.ReleaseTemporary(target);
         }
-
+        /// <summary>
+        /// 导出高度图
+        /// </summary>
         [MenuItem("Tools/TerrainTools/ExportHeightMap")]
         static void Entry()
         {
@@ -202,7 +215,9 @@ namespace OmegaEditor
                 terrain.ExportHeightMap(path);
             }
         }
-
+        /// <summary>
+        /// 创建Grounds
+        /// </summary>
         [MenuItem("Tools/TerrainTools/BuildTerrainGrounds")]
         public static void BuildTerrainGrounds()
         {
@@ -318,7 +333,11 @@ namespace OmegaEditor
                 }
             }
         }
-
+        /// <summary>
+        /// 导出高度图
+        /// </summary>
+        /// <param name="terrainData"></param>
+        /// <param name="path"></param>
         public static void ExportHeightMap(this TerrainData terrainData, string path = "")
         {
             RenderTexture height = terrainData.heightmapTexture;
