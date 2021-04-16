@@ -32,7 +32,6 @@ public class MeshPainterStyle : Editor
 
     }
     public override void OnInspectorGUI()
-        
     {
         if (Cheak())
         {
@@ -65,8 +64,9 @@ public class MeshPainterStyle : Editor
         }
         
     }
-
-    //获取材质球中的贴图
+    /// <summary>
+    /// 获取材质球中的贴图
+    /// </summary>
     void layerTex()
     {
         Transform Select = Selection.activeTransform;
@@ -76,8 +76,9 @@ public class MeshPainterStyle : Editor
         texLayer[2] = AssetPreview.GetAssetPreview(Select.gameObject.GetComponent<MeshRenderer>().sharedMaterial.GetTexture("_Splat2")) as Texture;
         texLayer[3] = AssetPreview.GetAssetPreview(Select.gameObject.GetComponent<MeshRenderer>().sharedMaterial.GetTexture("_Splat3")) as Texture;
     }
-
-    //获取笔刷  
+    /// <summary>
+    /// 获取笔刷
+    /// </summary>
     void IniBrush()
     {
         string MeshPaintEditorFolder = "Assets/MeshPaint/Editor/";
@@ -96,14 +97,21 @@ public class MeshPainterStyle : Editor
         } while (BrushesTL);
         brushTex = BrushList.ToArray(typeof(Texture)) as Texture[];
     }
-
-    //检查
-    bool Cheak()
+    /// <summary>
+    /// 检查
+    /// </summary>
+    /// <returns></returns>
+    private bool Cheak()
     {
         bool Cheak = false;
-        Transform Select = Selection.activeTransform;
-        Texture ControlTex = Select.gameObject.GetComponent<MeshRenderer>().sharedMaterial.GetTexture("_Control");
-        if(Select.gameObject.GetComponent<MeshRenderer>().sharedMaterial.shader == Shader.Find("Mya/texBlend/mya_4tex_blend_diffuce") || Select.gameObject.GetComponent<MeshRenderer>().sharedMaterial.shader == Shader.Find("Mya/texBlend/mya_4tex_blend_normal"))
+        GameObject selectGo = Selection.activeGameObject;
+        if (selectGo == null)
+            return Cheak;
+        MeshRenderer mr = selectGo.GetComponent<MeshRenderer>();
+        Material mat = mr.sharedMaterial;
+        Texture ControlTex = mat.GetTexture("_Control");
+        if(selectGo.GetComponent<MeshRenderer>().sharedMaterial.shader == Shader.Find("Mya/texBlend/mya_4tex_blend_diffuce") 
+            || selectGo.GetComponent<MeshRenderer>().sharedMaterial.shader == Shader.Find("Mya/texBlend/mya_4tex_blend_normal"))
         {
             if(ControlTex == null)
             {
@@ -125,11 +133,11 @@ public class MeshPainterStyle : Editor
         }
         return Cheak;
     }
-
-    //创建Contol贴图
+    /// <summary>
+    /// 创建Contol贴图
+    /// </summary>
     void creatContolTex()
     {
-
         //创建一个新的Contol贴图
         string ContolTexFolder = "Assets/MeshPaint/Controler/";
         Texture2D newMaskTex = new Texture2D(512, 512, TextureFormat.ARGB32, true);
@@ -166,7 +174,7 @@ public class MeshPainterStyle : Editor
         AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);//导入资源
         //Contol贴图的导入设置
         TextureImporter textureIm = AssetImporter.GetAtPath(path) as TextureImporter;
-        textureIm.textureFormat = TextureImporterFormat.ARGB32;
+        textureIm.textureFormat = TextureImporterFormat.RGBA32;
         textureIm.isReadable = true;
         textureIm.anisoLevel = 9;
         textureIm.mipmapEnabled = false;
@@ -177,18 +185,20 @@ public class MeshPainterStyle : Editor
         setContolTex(path);//设置Contol贴图
 
     }
-
-    //设置Contol贴图
+    /// <summary>
+    /// 设置Contol贴图
+    /// </summary>
+    /// <param name="peth"></param>
     void setContolTex(string peth)
     {
         Texture2D ControlTex = (Texture2D)AssetDatabase.LoadAssetAtPath(peth, typeof(Texture2D));
         Selection.activeTransform.gameObject.GetComponent<MeshRenderer>().sharedMaterial.SetTexture("_Control", ControlTex);
     }
-
+    /// <summary>
+    /// 绘制
+    /// </summary>
     void Painter()
     {
-        
-        
         Transform CurrentSelect = Selection.activeTransform;
         MeshFilter temp = CurrentSelect.GetComponent<MeshFilter>();//获取当前模型的MeshFilter
         float orthographicSize = (brushSize * CurrentSelect.localScale.x) * (temp.sharedMesh.bounds.size.x / 200);//笔刷在模型上的正交大小
@@ -268,15 +278,16 @@ public class MeshPainterStyle : Editor
                 MaskTex.Apply();
                 ToggleF = true;
             }
-
             else if (e.type == EventType.MouseUp && e.alt == false && e.button == 0 && ToggleF == true)
             {
-
                 SaveTexture();//绘制结束保存Control贴图
                 ToggleF = false;
             }
         }
     }
+    /// <summary>
+    /// 保存贴图
+    /// </summary>
     public void SaveTexture()
     {
         var path = AssetDatabase.GetAssetPath(MaskTex);

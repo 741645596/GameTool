@@ -7,13 +7,13 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: New Material
-  m_Shader: {fileID: 4800000, guid: f07d311951632cf41abda7369f1ca98b, type: 3}
+  m_Name: TerrianMat
+  m_Shader: {fileID: 4800000, guid: 95182397bb0026d4a90090e37ea2efeb, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: 2000
+  m_CustomRenderQueue: -1
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -111,4 +111,3 @@ Material:
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _LightCol: {r: 0.045685537, g: 0.26330376, b: 0.47794116, a: 1}
     - _Tiling3: {r: 5, g: 5, b: 0, a: 0}
-  m_BuildTextureStacks: []
