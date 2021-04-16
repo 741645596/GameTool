@@ -3,9 +3,9 @@ using UnityEditor;
 using System.IO;
 using System.Collections;
 
-[CustomEditor(typeof(MeshPainter))]
+[CustomEditor(typeof(TerrianPainter))]
 [CanEditMultipleObjects]
-public class MeshPainterStyle : Editor
+public class TerrianPainterStyle : Editor
 {
     string contolTexName = "";
 
@@ -69,19 +69,21 @@ public class MeshPainterStyle : Editor
     /// </summary>
     void layerTex()
     {
-        Transform Select = Selection.activeTransform;
+        GameObject selectGo = Selection.activeGameObject;
+        MeshRenderer mr = selectGo.GetComponent<MeshRenderer>();
+        Material mat = mr.sharedMaterial;
         texLayer = new Texture[4];
-        texLayer[0] = AssetPreview.GetAssetPreview(Select.gameObject.GetComponent<MeshRenderer>().sharedMaterial.GetTexture("_Splat0")) as Texture;
-        texLayer[1] = AssetPreview.GetAssetPreview(Select.gameObject.GetComponent<MeshRenderer>().sharedMaterial.GetTexture("_Splat1")) as Texture;
-        texLayer[2] = AssetPreview.GetAssetPreview(Select.gameObject.GetComponent<MeshRenderer>().sharedMaterial.GetTexture("_Splat2")) as Texture;
-        texLayer[3] = AssetPreview.GetAssetPreview(Select.gameObject.GetComponent<MeshRenderer>().sharedMaterial.GetTexture("_Splat3")) as Texture;
+        texLayer[0] = AssetPreview.GetAssetPreview(mat.GetTexture("_Splat0")) as Texture;
+        texLayer[1] = AssetPreview.GetAssetPreview(mat.GetTexture("_Splat1")) as Texture;
+        texLayer[2] = AssetPreview.GetAssetPreview(mat.GetTexture("_Splat2")) as Texture;
+        texLayer[3] = AssetPreview.GetAssetPreview(mat.GetTexture("_Splat3")) as Texture;
     }
     /// <summary>
     /// 获取笔刷
     /// </summary>
     void IniBrush()
     {
-        string MeshPaintEditorFolder = "Assets/MeshPaint/Editor/";
+        string MeshPaintEditorFolder = "Assets/TerrianPaint/Editor/";
         ArrayList BrushList = new ArrayList();
         Texture BrushesTL;
         int BrushNum = 0;
@@ -110,15 +112,15 @@ public class MeshPainterStyle : Editor
         MeshRenderer mr = selectGo.GetComponent<MeshRenderer>();
         Material mat = mr.sharedMaterial;
         Texture ControlTex = mat.GetTexture("_Control");
-        if(selectGo.GetComponent<MeshRenderer>().sharedMaterial.shader == Shader.Find("Mya/texBlend/mya_4tex_blend_diffuce") 
-            || selectGo.GetComponent<MeshRenderer>().sharedMaterial.shader == Shader.Find("Mya/texBlend/mya_4tex_blend_normal"))
+        if(selectGo.GetComponent<MeshRenderer>().sharedMaterial.shader == Shader.Find("Terrian/TerrianSplat_diffuce") 
+            || selectGo.GetComponent<MeshRenderer>().sharedMaterial.shader == Shader.Find("Terrian/TerrianSplat_normal"))
         {
             if(ControlTex == null)
             {
                 EditorGUILayout.HelpBox("当前模型材质球中未找到Control贴图，绘制功能不可用！", MessageType.Error);
                 if (GUILayout.Button("创建Control贴图"))
                 {
-                    creatContolTex();
+                    CreatContolTex();
                     //Select.gameObject.GetComponent<MeshRenderer>().sharedMaterial.SetTexture("_Control", creatContolTex());
                 }
             }
@@ -136,10 +138,10 @@ public class MeshPainterStyle : Editor
     /// <summary>
     /// 创建Contol贴图
     /// </summary>
-    void creatContolTex()
+    void CreatContolTex()
     {
         //创建一个新的Contol贴图
-        string ContolTexFolder = "Assets/MeshPaint/Controler/";
+        string ContolTexFolder = "Assets/TerrianPaint/Controler/";
         Texture2D newMaskTex = new Texture2D(512, 512, TextureFormat.ARGB32, true);
         Color[] colorBase = new Color[512 * 512];
         for(int t = 0; t< colorBase.Length; t++)
@@ -174,7 +176,7 @@ public class MeshPainterStyle : Editor
         AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);//导入资源
         //Contol贴图的导入设置
         TextureImporter textureIm = AssetImporter.GetAtPath(path) as TextureImporter;
-        textureIm.textureFormat = TextureImporterFormat.RGBA32;
+        //textureIm.textureFormat = TextureImporterFormat.RGBA32;
         textureIm.isReadable = true;
         textureIm.anisoLevel = 9;
         textureIm.mipmapEnabled = false;
@@ -216,7 +218,8 @@ public class MeshPainterStyle : Editor
             Handles.DrawWireDisc(raycastHit.point, raycastHit.normal, orthographicSize);//根据笔刷大小在鼠标位置显示一个圆
 
             //鼠标点击或按下并拖动进行绘制
-            if ((e.type == EventType.MouseDrag && e.alt == false && e.control == false && e.shift == false && e.button == 0) || (e.type == EventType.MouseDown && e.shift == false && e.alt == false && e.control == false && e.button == 0 && ToggleF == false))
+            if ((e.type == EventType.MouseDrag && e.alt == false && e.control == false && e.shift == false && e.button == 0) 
+                || (e.type == EventType.MouseDown && e.shift == false && e.alt == false && e.control == false && e.button == 0 && ToggleF == false))
             {
                 //选择绘制的通道
                 Color targetColor = new Color(1f, 0f, 0f, 0f);
@@ -272,7 +275,7 @@ public class MeshPainterStyle : Editor
                         terrainBay[index] = Color.Lerp(terrainBay[index], targetColor, Stronger);
                     }
                 }
-                Undo.RegisterCompleteObjectUndo(MaskTex, "meshPaint");//保存历史记录以便撤销
+                Undo.RegisterCompleteObjectUndo(MaskTex, "TerrianPaint");//保存历史记录以便撤销
 
                 MaskTex.SetPixels(x, y, width, height, terrainBay, 0);//把绘制后的Control贴图保存起来
                 MaskTex.Apply();

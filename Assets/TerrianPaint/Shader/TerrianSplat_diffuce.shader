@@ -7,9 +7,7 @@
 利用贴图的A通道影响混合的强度，实现更自然的过渡
 
 */
-
-
-Shader"Mya/texBlend/mya_4tex_blend_diffuce" 
+Shader"Terrian/TerrianSplat_diffuce" 
 {
     Properties {
     	_Splat0 ("Layer 1(RGBA)", 2D) = "white" {}
@@ -71,14 +69,6 @@ Shader"Mya/texBlend/mya_4tex_blend_diffuce"
 
         //SM2.0超过4张贴图的UV会出BUG，所以用control来算出第四张贴图的UV
     	half4 lay4 = tex2D (_Splat3, IN.uv_Control*_Tiling3.xy);
-
-
-        //纯色测试代码
-        //lay1.rgb = fixed3(1,0,0);
-        //lay2.rgb = fixed3(0,1,0);
-        //lay3.rgb = fixed3(0,0,1);
-        //lay4.rgb = fixed3(0,0,0);
-
         half4 blend = Blend(lay1.a,lay2.a,lay3.a,lay4.a,splat_control);
     	o.Alpha = 0.0;
         o.Albedo.rgb = blend.r * lay1 + blend.g * lay2 + blend.b * lay3 + blend.a * lay4;//混合
@@ -87,6 +77,4 @@ Shader"Mya/texBlend/mya_4tex_blend_diffuce"
     }
     ENDCG 
     }
-    FallBack "Diffuse"
-
 }

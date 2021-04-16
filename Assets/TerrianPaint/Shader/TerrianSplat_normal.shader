@@ -12,7 +12,7 @@
 
 */
 
-Shader"Mya/texBlend/mya_4tex_blend_normal" 
+Shader"Terrian/TerrianSplat_normal" 
 {
     Properties 
     {
