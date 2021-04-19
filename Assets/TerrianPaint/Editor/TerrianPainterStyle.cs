@@ -45,7 +45,7 @@ public class TerrianPainterStyle : Editor
             brushStronger = EditorGUILayout.Slider("Brush Stronger", brushStronger, 0, 1f);//笔刷强度
 
             IniBrush();
-            layerTex();
+            LayerTex();
             GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
                     GUILayout.BeginHorizontal("box", GUILayout.Width(340));
@@ -67,7 +67,7 @@ public class TerrianPainterStyle : Editor
     /// <summary>
     /// 获取材质球中的贴图
     /// </summary>
-    void layerTex()
+    void LayerTex()
     {
         GameObject selectGo = Selection.activeGameObject;
         MeshRenderer mr = selectGo.GetComponent<MeshRenderer>();
@@ -106,14 +106,13 @@ public class TerrianPainterStyle : Editor
     private bool Cheak()
     {
         bool Cheak = false;
-        GameObject selectGo = Selection.activeGameObject;
-        if (selectGo == null)
+        Material TerrianMat = GetCurTerrianMaterial();
+        if (TerrianMat == null)
             return Cheak;
-        MeshRenderer mr = selectGo.GetComponent<MeshRenderer>();
-        Material mat = mr.sharedMaterial;
-        Texture ControlTex = mat.GetTexture("_Control");
-        if(selectGo.GetComponent<MeshRenderer>().sharedMaterial.shader == Shader.Find("Terrian/TerrianSplat_diffuce") 
-            || selectGo.GetComponent<MeshRenderer>().sharedMaterial.shader == Shader.Find("Terrian/TerrianSplat_normal"))
+
+        Texture ControlTex = TerrianMat.GetTexture("_Control");
+        if(TerrianMat.shader == Shader.Find("Terrian/TerrianSplat_diffuce") 
+            || TerrianMat.shader == Shader.Find("Terrian/TerrianSplat_normal"))
         {
             if(ControlTex == null)
             {
@@ -121,7 +120,6 @@ public class TerrianPainterStyle : Editor
                 if (GUILayout.Button("创建Control贴图"))
                 {
                     CreatContolTex();
-                    //Select.gameObject.GetComponent<MeshRenderer>().sharedMaterial.SetTexture("_Control", creatContolTex());
                 }
             }
             else
@@ -182,29 +180,28 @@ public class TerrianPainterStyle : Editor
         textureIm.mipmapEnabled = false;
         textureIm.wrapMode = TextureWrapMode.Clamp;
         AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);//刷新
-
-
-        setContolTex(path);//设置Contol贴图
-
+        SetContolTex(path);//设置Contol贴图
     }
     /// <summary>
     /// 设置Contol贴图
     /// </summary>
-    /// <param name="peth"></param>
-    void setContolTex(string peth)
+    /// <param name="path"></param>
+    void SetContolTex(string path)
     {
-        Texture2D ControlTex = (Texture2D)AssetDatabase.LoadAssetAtPath(peth, typeof(Texture2D));
-        Selection.activeTransform.gameObject.GetComponent<MeshRenderer>().sharedMaterial.SetTexture("_Control", ControlTex);
+        Texture2D ControlTex = (Texture2D)AssetDatabase.LoadAssetAtPath(path, typeof(Texture2D));
+        Material TerrianMat = GetCurTerrianMaterial();
+        TerrianMat.SetTexture("_Control", ControlTex);
     }
     /// <summary>
     /// 绘制
     /// </summary>
     void Painter()
     {
+        Material TerrianMat = GetCurTerrianMaterial();
         Transform CurrentSelect = Selection.activeTransform;
         MeshFilter temp = CurrentSelect.GetComponent<MeshFilter>();//获取当前模型的MeshFilter
         float orthographicSize = (brushSize * CurrentSelect.localScale.x) * (temp.sharedMesh.bounds.size.x / 200);//笔刷在模型上的正交大小
-        MaskTex = (Texture2D)CurrentSelect.gameObject.GetComponent<MeshRenderer>().sharedMaterial.GetTexture("_Control");//从材质球中获取Control贴图
+        MaskTex = (Texture2D)TerrianMat.GetTexture("_Control");//从材质球中获取Control贴图
 
         brushSizeInPourcent = (int)Mathf.Round((brushSize * MaskTex.width) / 100);//笔刷在模型上的大小
         bool ToggleF = false;
@@ -297,5 +294,17 @@ public class TerrianPainterStyle : Editor
         var bytes = MaskTex.EncodeToPNG();
         File.WriteAllBytes(path, bytes);
         AssetDatabase.ImportAsset(path, ImportAssetOptions.ForceUpdate);//刷新
+    }
+    /// <summary>
+    /// 获取地形terrian
+    /// </summary>
+    /// <returns></returns>
+    private Material GetCurTerrianMaterial()
+    {
+        GameObject selectGo = Selection.activeGameObject;
+        if (selectGo == null)
+            return null;
+        MeshRenderer mr = selectGo.GetComponent<MeshRenderer>();
+        return mr.sharedMaterial;
     }
 }

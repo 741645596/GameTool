@@ -17,7 +17,6 @@ Shader"Terrian/TerrianSplat_diffuce"
         _Tiling3("_Tiling4 x/y", Vector)=(1,1,0,0)
     	_Control ("Control (RGBA)", 2D) = "white" {}
         _Weight("Blend Weight" , Range(0.001,1)) = 0.2
-        
     }
                     
     SubShader {
