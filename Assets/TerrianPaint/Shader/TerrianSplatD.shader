@@ -115,10 +115,14 @@
                 // sample the texture
                 half4 SnowCol = tex2D(_SnowTex, IN.uv.xy);
                 float depth = tex2D(_SnowDepthTex, IN.uv.xy).r;
-                if (depth > _Depth)
+                // _Depth < depth sign1 = 1
+                float sign = step(_Depth, depth);
+                col.rgb = col.rgb * (1.0 -sign) +  SnowCol.rgb * sign;
+
+                /*if (depth > _Depth)
                 {
                     col.rgb = SnowCol.rgb;
-                }
+                }*/
 
                 // light
                 fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz;
