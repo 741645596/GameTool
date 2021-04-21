@@ -6,7 +6,6 @@
 		_SpecColor("Specular Color", Color) = (0.5, 0.5, 0.5, 1)
 		[PowerSlider(5.0)] _Shininess("Shininess", Range(0.03, 1)) = 0.078125
 
-
 		[Header(Texture)]
 		[NoScaleOffset] _Splat("SplatMap", 2D) = "white" {}
 
@@ -34,7 +33,6 @@
 			CGPROGRAM
 			#pragma target 3.0
 
-
 			#pragma multi_compile _ _RECEIVESHADOW
 			#pragma multi_compile _ _CASCADE_SHADOW
 			#pragma multi_compile _ USE_NORMAL
@@ -52,5 +50,4 @@
 			ENDCG 
 		}
 	}
-	FallBack "Legacy Shaders/Override/VertexLit"
 }
