@@ -1,15 +1,13 @@
-﻿Shader "Omega/Plants/TreeLeaf"
+﻿Shader "Plants/TreeLeaf"
 {
 	Properties
 	{
 		_Color("Main Color", Color) = (1,1,1,1)
 		_SpecularColor("Specular Color", Color) = (.2,.2,.2,1)
 		_Shininess("Shininess", Range(0.01, 1)) = 0.5
-		//_Shadow("Shadow", Range(0.01, 1)) = 0.9
 		_MainTex("Base (RGB) TransGloss (A)", 2D) = "white" {}
 		_BumpMap("Normalmap", 2D) = "bump" {}
 		_Cutoff("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
-		//_Mode("__mode", Float) = 2
 	}
 
 	SubShader
@@ -23,7 +21,6 @@
 			#pragma vertex vert
 			#pragma fragment frag
 			#pragma target 3.0
-			//#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
 			#include "UnityCG.cginc"
 			#include "AutoLight.cginc"
@@ -33,13 +30,11 @@
 			fixed4 _Color;
 			fixed4 _SpecularColor;
 			half _Shininess;
-			//half _Shadow;
 			
 			sampler2D _MainTex;
 			sampler2D _BumpMap;
 
 			half _Cutoff;
-			//half _Mode;
 
 			struct CustomLeafOutput 
 			{
@@ -66,8 +61,6 @@
 				float4 tanSpace2 : TEXCOORD3;
 				float3 viewDir : TEXCOORD4;
 				float3 lightDir : TEXCOORD5;
-				//UNITY_SHADOW_COORDS(6)
-				//UNITY_FOG_COORDS(7)
 				half fogCoord	: TEXCOORD6;
 			};
 
@@ -85,8 +78,6 @@
 				o.tanSpace2 = float4(tangent.z, binormal.z, normal.z, posWorld.z);
 				o.viewDir  = normalize(UnityWorldSpaceViewDir(posWorld));
 				o.lightDir = normalize(UnityWorldSpaceLightDir(posWorld));
-				//UNITY_TRANSFER_SHADOW(o, v.texcoord0.xy);
-				//UNITY_TRANSFER_FOG(o, o.pos);
 				o.fogCoord = GetFogCoord(o.pos, posWorld);
 				return o;
 			}
@@ -101,8 +92,6 @@
 				worldNormal.y = dot(i.tanSpace1.xyz, normal); 
 				worldNormal.z = dot(i.tanSpace2.xyz, normal);
 				
-				//UNITY_LIGHT_ATTENUATION(atten, i, i.worldPos)
-				
 				albedo = albedo * _Color;
 
 				half3 h = normalize(i.lightDir + i.viewDir);
@@ -112,77 +101,16 @@
 				
 				half3 light = _LightColor0.rgb;
 				
-				/*atten = lerp(1, atten, _Shadow);
-				NoL = lerp(1, NoL, _Shadow);
-				light = lerp(1, light, _Shadow);*/
 				
 				fixed4 col;
 				col.rgb = albedo.rgb * UNITY_LIGHTMODEL_AMBIENT;
 				col.rgb += (albedo.rgb * light.rgb * NoL + light.rgb * spec * _SpecularColor.rgb);// * atten;
 				col.a = albedo.a;
 
-				//UNITY_APPLY_FOG(i.fogCoord, col);
-				//col.rgb = ApplyFog(col.rgb, i.fogCoord);
 				col.rgb = ApplySunFog(col.rgb, i.fogCoord, i.viewDir);
-				//UNITY_OPAQUE_ALPHA(col.a);
 				return col;
 			}
 			ENDCG
 		}
-		/*CGPROGRAM
-		#pragma surface surf CustomLeafLight addshadow 
-		#pragma target 3.0
-
-		struct CustomLeafOutput {
-			fixed3 Albedo;
-			fixed3 Normal;
-			fixed Alpha;
-			fixed3 Emission;
-		};
-
-		sampler2D _MainTex;
-		sampler2D _BumpMap;
-		fixed4 _Color;
-		fixed4 _SpecularColor;
-		fixed _Shininess;
-		fixed _Shadow;
-		fixed _Cutoff;
-
-		struct Input {
-			fixed2 uv_MainTex;
-			fixed2 uv_BumpMap;
-		};
-
-		void surf(Input IN, inout CustomLeafOutput o) {
-			fixed4 tex = tex2D(_MainTex, IN.uv_MainTex);
-			o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
-			o.Albedo = tex.rgb*_Color.rgb;
-			o.Alpha = tex.a*_Color.a;
-			clip(tex.a - _Cutoff);
-		}
-
-		half4 LightingCustomLeafLight(CustomLeafOutput s, half3 lightDir, half3 viewDir, half atten)
-		{
-			half3 h = normalize(lightDir + viewDir);
-			half diff = max(0, dot(s.Normal, lightDir));
-
-			half nh = max(0, dot(s.Normal, h));
-			half spec = pow(nh, 48*_Shininess);
-
-			half3 light = _LightColor0.rgb;
-
-			atten = lerp(1, atten, _Shadow);
-			diff = lerp(1, diff, _Shadow);
-			light = lerp(1, light, _Shadow);
-
-
-			half4 c;
-			c.rgb = (s.Albedo * light.rgb * diff   + light.rgb*spec*_SpecularColor.rgb) * atten;
-			c.a = s.Alpha;
-
-			return c;
-		}
-		ENDCG*/
 	}
-//FallBack "Legacy Shaders/Transparent/Cutout/VertexLit"
 }
