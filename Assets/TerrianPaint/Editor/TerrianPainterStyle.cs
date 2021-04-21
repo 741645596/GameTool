@@ -35,14 +35,13 @@ public class TerrianPainterStyle : Editor
     {
         if (Cheak())
         {
-            GUIStyle boolBtnOn = new GUIStyle(GUI.skin.GetStyle("Button"));//得到Button样式
             GUILayout.BeginHorizontal();
                 GUILayout.FlexibleSpace();
-                isPaint = GUILayout.Toggle(isPaint, EditorGUIUtility.IconContent("EditCollider"), boolBtnOn, GUILayout.Width(35), GUILayout.Height(25));//编辑模式开关
+                isPaint = GUILayout.Toggle(isPaint, "开启绘制", GUILayout.Width(80), GUILayout.Height(25));//编辑模式开关
             GUILayout.FlexibleSpace();
             GUILayout.EndHorizontal();
-            brushSize = (int)EditorGUILayout.Slider("Brush Size", brushSize, 1, 36);//笔刷大小
-            brushStronger = EditorGUILayout.Slider("Brush Stronger", brushStronger, 0, 1f);//笔刷强度
+            brushSize = (int)EditorGUILayout.Slider("笔刷大小", brushSize, 1, 36);//笔刷大小
+            brushStronger = EditorGUILayout.Slider("笔刷强度", brushStronger, 0, 1f);//笔刷强度
 
             IniBrush();
             LayerTex();
@@ -111,8 +110,7 @@ public class TerrianPainterStyle : Editor
             return Cheak;
 
         Texture ControlTex = TerrianMat.GetTexture("_Control");
-        if(TerrianMat.shader == Shader.Find("Terrian/TerrianSplat_diffuce") 
-            || TerrianMat.shader == Shader.Find("Terrian/TerrianSplat_normal"))
+        if(TerrianMat.shader == Shader.Find("Terrian/TerrianSplatD") )
         {
             if(ControlTex == null)
             {
@@ -139,7 +137,7 @@ public class TerrianPainterStyle : Editor
     void CreatContolTex()
     {
         //创建一个新的Contol贴图
-        string ContolTexFolder = "Assets/TerrianPaint/Controler/";
+        string ContolTexFolder = "Assets/TerrianPaint/SplatMap/";
         Texture2D newMaskTex = new Texture2D(512, 512, TextureFormat.ARGB32, true);
         Color[] colorBase = new Color[512 * 512];
         for(int t = 0; t< colorBase.Length; t++)

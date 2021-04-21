@@ -1,4 +1,4 @@
-﻿Shader "Unlit/TerrianSplatD"
+﻿Shader "Terrian/TerrianSplatD"
 {
     Properties
     {
@@ -10,7 +10,7 @@
         _Weight("Blend Weight" , Range(0.001,1)) = 0.2
         _SnowTex("SnowTex", 2D) = "white" {}
         _SnowDepthTex("SnowDepthTex", 2D) = "white" {}
-        _Depth("Depth" , Range(0.0,1)) = 1.0
+        _ShowSnowDepth("ShowSnowDepth" , Range(0.0,1)) = 1.0
 
 
     }
@@ -46,7 +46,6 @@
                 float2 uv : TEXCOORD0;
                 float4 uv_splat12 : TEXCOORD2;
                 float4 uv_splat34 : TEXCOORD3;
-                // put shadows data into TEXCOORD3
                 UNITY_FOG_COORDS(7)
                 fixed3 diff : COLOR1;
             };
@@ -62,7 +61,7 @@
             float4 _SnowTex_ST;
             sampler2D _SnowDepthTex;
             float4 _SnowDepthTex_ST;
-            float _Depth;
+            float _ShowSnowDepth;
             // 混合
             inline half4 Blend(half depth1, half depth2, half depth3, half depth4, fixed4 control)
             {
@@ -116,10 +115,10 @@
                 half4 SnowCol = tex2D(_SnowTex, IN.uv.xy);
                 float depth = tex2D(_SnowDepthTex, IN.uv.xy).r;
                 // _Depth < depth sign1 = 1
-                float sign = step(_Depth, depth);
+                float sign = step(_ShowSnowDepth, depth);
                 col.rgb = col.rgb * (1.0 -sign) +  SnowCol.rgb * sign;
 
-                /*if (depth > _Depth)
+                /*if (depth > _ShowSnowDepth)
                 {
                     col.rgb = SnowCol.rgb;
                 }*/

@@ -113,6 +113,10 @@ struct CustomVertexOutputForwardBase
 
 #ifndef USE_2DARRAY
 #if _SPLAT_X4
+// 重定为uv
+// index 纹理索引 
+// uv1 重定位的uv值
+// lod 等级
 	void RemapUV(float2 uv, uint4 index, out float4 uv1, out float4 uv2, out half4 lod)
 	{
 		uint4 row = index / ROW;
@@ -146,12 +150,16 @@ struct CustomVertexOutputForwardBase
 		uv2 = clamp(uv2, offset2, INV_COLROW.xyxy - offset2);
 		uv1.xzyw += float4(col.xy, row.xy) * INV_COLROW.xxyy;
 		uv2.xzyw += float4(col.zw, row.zw) * INV_COLROW.xxyy;
-		#if SHADER_API_METAL
+#if SHADER_API_METAL
 		uv1.yw = 1 - uv1.yw;
 		uv2.yw = 1 - uv2.yw;
-		#endif //SHADER_API_METAL
+#endif //SHADER_API_METAL
 	}
 #else // Splat2
+    // 重定为uv
+    // index 纹理索引 
+    // uv1 重定位的uv值
+    // lod 等级
 	void RemapUV(float2 uv, uint2 index, out float4 uv1, out half2 lod)
 	{
 		uint2 row = index / ROW;
@@ -175,9 +183,9 @@ struct CustomVertexOutputForwardBase
 		float4 offset = texelSizeLod * 0.5;
 		uv1 = clamp(uv1, offset, INV_COLROW.xyxy - offset);
 		uv1.xzyw += float4(col, row) * INV_COLROW.xxyy;
-		#if SHADER_API_METAL
+#if SHADER_API_METAL
 		uv1.yw = 1 - uv1.yw;
-		#endif //SHADER_API_METAL
+#endif //SHADER_API_METAL
 	}
 #endif //_SPLAT_X4
 #endif //!USE_2DARRAY
@@ -244,12 +252,13 @@ half3 norDir = i.tangentToWorldAndPackedData[2].xyz;
 
 #ifdef USE_VERTEXCOLOR
 	idx = _Index;
-	#if _SPLAT_X4
+#if _SPLAT_X4
 	splat = i.color;
-	#else //_SPLAT_X2
+#else //_SPLAT_X2
 	splat = i.color.r;
-	#endif //_SPLAT_X4
+#endif //_SPLAT_X4
 #else
+    // floor 向下取整函数
 	float2 pointSplatUV = (floor(splatUV * _Splat_TexelSize.zw) + 0.5) * _Splat_TexelSize.xy;
 	fixed3 pointSplat = tex2D(_Splat, pointSplatUV, 0, 0).rgb;
 	fixed3 filteredSplat = tex2D(_Splat, splatUV, 0, 0).rgb;
