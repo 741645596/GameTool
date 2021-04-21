@@ -292,4 +292,4 @@ idx.xy = splat.rg * SIZE;
 	return saturate(half4(finalColor,finalAlpha));
 }
 
-#endif // TERRAIN_CORE_INCLUDED
+#endif 

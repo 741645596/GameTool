@@ -1,4 +1,4 @@
-﻿Shader "Omega/Env/Terrain_NormalSpec_Atlas"
+﻿Shader "Terrain/Terrain_NormalSpec_Atlas"
 {
 	Properties
 	{
@@ -45,7 +45,7 @@
 
 			static float4x4 _Scale = float4x4(_Tile4, _Tile3, _Tile2, _Tile1);
 
-			#include "../cginc/TerrainCore.cginc"
+			#include "../cginc/TerrainCoreAtlas.cginc"
 
 			ENDCG 
 		}
