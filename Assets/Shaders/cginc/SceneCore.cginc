@@ -1,5 +1,3 @@
-// Upgrade NOTE: replaced 'defined _Matcap' with 'defined (_Matcap)'
-
 #ifndef ENVCORE_INCLUDED
 #define ENVCORE_INCLUDED
 
