@@ -20,7 +20,7 @@
             #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
-            #include "../Fog/FogCore.cginc"
+            #include "../cginc/FogCore.cginc"
 
             struct appdata
             {

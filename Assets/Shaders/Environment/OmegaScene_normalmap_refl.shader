@@ -40,7 +40,7 @@
 			#pragma fragment CustomfragBase
 			#define _USENORMAL
 			#define _USEREFL
-			#include "SceneCore.cginc"
+			#include "../cginc/SceneCore.cginc"
 
 			ENDCG
 		}

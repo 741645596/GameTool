@@ -28,7 +28,7 @@
 			#include "UnityCG.cginc"
 			#include "AutoLight.cginc"
 			#include "UnityLightingCommon.cginc"
-			#include "../Fog/FogCore.cginc"
+			#include "../cginc/FogCore.cginc"
 
 			fixed4 _Color;
 			fixed4 _SpecularColor;

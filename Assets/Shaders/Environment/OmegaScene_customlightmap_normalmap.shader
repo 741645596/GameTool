@@ -34,10 +34,9 @@
 #define _CUSTOM_LIGHTMAP
 #define _LIGHTMAP
 #define _USENORMAL
-				#include "SceneCore.cginc"
+				#include "../cginc/SceneCore.cginc"
 
 				ENDCG
 			}
 		}
-			//FallBack "Legacy Shaders/Override/VertexLit"
 }

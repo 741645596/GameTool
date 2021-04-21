@@ -49,7 +49,7 @@
 #define _LIGHTMAP
 #define _USENORMAL
 #define _SPEC
-			#include "SceneCore.cginc"
+			#include "../cginc/SceneCore.cginc"
 
 			ENDCG
 		}

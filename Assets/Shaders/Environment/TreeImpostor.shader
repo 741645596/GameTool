@@ -21,7 +21,7 @@
                     #pragma multi_compile_instancing
 
                     #include "UnityCG.cginc"
-                    #include "../Fog/FogCore.cginc"
+                    #include "../cginc/FogCore.cginc"
 
                     struct appdata_t {
                         float4 vertex : POSITION;

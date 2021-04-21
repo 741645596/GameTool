@@ -43,7 +43,7 @@
 			#pragma vertex CustomvertBase
 			#pragma fragment CustomfragBase
 			#define _ALPHATEST
-			#include "SceneCore.cginc"
+			#include "../cginc/SceneCore.cginc"
 
 			ENDCG
 		}

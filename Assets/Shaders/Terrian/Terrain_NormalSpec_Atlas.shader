@@ -47,7 +47,7 @@
 
 			static float4x4 _Scale = float4x4(_Tile4, _Tile3, _Tile2, _Tile1);
 
-			#include "Core/TerrainCore.cginc"
+			#include "../cginc/TerrainCore.cginc"
 
 			ENDCG 
 		}

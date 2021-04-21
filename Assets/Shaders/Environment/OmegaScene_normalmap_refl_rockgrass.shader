@@ -61,10 +61,9 @@
 #define _USENORMAL
 #define _USEREFL
 #define _USEROCKGRASS
-				#include "SceneCore.cginc"
+				#include "../cginc/SceneCore.cginc"
 
 				ENDCG
 			}
 		}
-			//FallBack "Legacy Shaders/Override/VertexLit"
 }

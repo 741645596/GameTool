@@ -58,7 +58,7 @@
 			#pragma vertex CustomvertBase
 			#pragma fragment CustomfragBase
 
-			#include "PlantsCore.cginc"
+			#include "../cginc/PlantsCore.cginc"
 
 			ENDCG
 		}

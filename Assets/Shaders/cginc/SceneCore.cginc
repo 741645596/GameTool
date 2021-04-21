@@ -5,8 +5,8 @@
 
 #include "AutoLight.cginc"
 #include "UnityCG.cginc"
-#include "../Fog/FogCore.cginc"
-#include "../Shadow/shadowmap.cginc"
+#include "../cginc/FogCore.cginc"
+#include "../cginc/shadowmap.cginc"
 
 #ifdef _USEROCKGRASS
 float _GrassHeightBlend;

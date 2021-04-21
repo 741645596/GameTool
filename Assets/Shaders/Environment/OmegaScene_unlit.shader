@@ -51,10 +51,9 @@
 				#pragma vertex CustomvertBase
 				#pragma fragment CustomfragBase
 #define _Unlit
-				#include "SceneCore.cginc"
+				#include "../cginc/SceneCore.cginc"
 
 				ENDCG
 			}
 		}
-			//FallBack "Legacy Shaders/Override/VertexLit"
 }

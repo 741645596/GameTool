@@ -32,7 +32,7 @@
 			#pragma vertex CustomvertBase
 			#pragma fragment CustomfragBase
 
-			#include "SceneCore.cginc"
+			#include "../cginc/SceneCore.cginc"
 
 			ENDCG
 		}

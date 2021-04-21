@@ -2,8 +2,8 @@
 #define CHCORE_INCLUDED
 
 #include "UnityCG.cginc"
-#include "../Shadow/shadowmap.cginc"
-#include "../Fog/FogCore.cginc"
+#include "../cginc/shadowmap.cginc"
+#include "../cginc/FogCore.cginc"
 
 //variants
 float4 _OwnerLightAmbient;
