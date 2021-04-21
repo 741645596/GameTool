@@ -3,8 +3,8 @@
 
 #include "AutoLight.cginc"
 #include "UnityCG.cginc"
-#include "../Fog/FogCore.cginc"
-#include "../Shadow/shadowmap.cginc"
+#include "FogCore.cginc"
+#include "shadowmap.cginc"
 
 #define COL 4
 #define ROW 4
