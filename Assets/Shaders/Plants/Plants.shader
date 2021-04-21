@@ -22,12 +22,6 @@
 		_LightmapContrast("Lightmap Contrast", Range(0 , 3)) = 1
 		_DesaturateLightmap("Desaturate Lightmap", Range(-2 , 2)) = 0
 
-
-		//[Header(Shadow)]
-		//_ShadowColor("ShadowColor (RGB)", Color) = (0.5,0.5,0.5,1)
-		//_ShadowDistance("ShadowDistance",float) = 20
-		//_ShadowFade("ShadowFade",Range(0.1,1)) = 0.1
-
 		[Header(Culling)]
 		_DistCull("CullingDistance",float) = 85
 
@@ -44,14 +38,10 @@
 			CGPROGRAM
 			#pragma target 3.0
 
-			//#pragma multi_compile _LIGHTMAP
 			#pragma multi_compile _ _USEWIND
-			//#pragma multi_compile _USECULL
 			#pragma multi_compile _ _RECEIVESHADOW
 			#pragma multi_compile _ _CASCADE_SHADOW
 
-			//#pragma multi_compile_fwdadd_fullshadows
-			//#pragma multi_compile_fwdbase
 			#pragma multi_compile_fog
 			#pragma multi_compile_instancing
 
@@ -63,5 +53,4 @@
 			ENDCG
 		}
     }
-//FallBack "Legacy Shaders/Transparent/Cutout/VertexLit"
 }

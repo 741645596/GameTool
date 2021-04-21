@@ -15,17 +15,13 @@
 		_SKinShadow("皮肤暗部补偿", Range(0, 8.0)) = 0.5
 
 		[Header((Saturation))]
-		//_ColorfulAll("整体饱和度", Range(0.0, 2.0)) = 1
 		_ColorfulMetal("反光饱和度", Range(0.0, 2.0)) = 1
-		//_HighlightSaturation("高光饱和度", Range(0,2)) = 1
 
 		[Header((Light))]
 		_MainLightIntensity("照明光", Range(0,2)) = 1	
 		_Highlight("高光强度", Range(0,2)) = 1
 		_AmbientLight("环境光", Range(0,2)) = 1
 		_CubeIntensity("环境反光", Range(0,2)) = 1
-
-		//_Rotation("旋转Cubemap", Range(-360,360)) = 0
 
 		[Header((Rim))]
 		_RimLight("贴图边缘光", Range(0,2)) = 1
@@ -43,14 +39,10 @@
 		_ColorE("Color+E", 2D) = "white" {}
 		_SMMS("SMMS", 2D) = "white" {}
 		_Normal("Normal", 2D) = "bump" {}
-		//_ReflTex("ReflTex",CUBE) = "white" {}
 		_MatcapTex ("MatcapTex",2D) = "black" {}
-		//[KeywordEnum(NOSHADOW, HARD_SHADOW, SOFT_SHADOW)]shadow("shadow options", float) = 2
-        //_Cubemap("Cubemap",Cube) = "cube" {}
-		//_WholeAO("明暗度", Range(0, 1.0)) = 1
+
 
 		_PatternMaskTex("PatternMaskTex",2D) = "black" {}
-		//[HideInInspector] _PatternColor2("PatternColor2", Color) = (1,1,1,0)
 		_PatternTex("PatternTex",2D) = "white" {}
 		_PatternColor1("PatternColor", Color) = (1,1,1,1)
 
@@ -87,7 +79,6 @@
 			CGPROGRAM
 			#pragma target 3.0
 			#pragma only_renderers d3d11 glcore gles gles3 metal d3d9
-			//#pragma multi_compile_fwdbase nolightmap nodirlightmap nodynlightmap novertexlight
 
 			#define _CHDISPLAY
 			#define _MATCAP
@@ -99,7 +90,7 @@
 			#pragma multi_compile _ _SOFTSHADOW
 			#pragma multi_compile _ _RECEIVESHADOW
 			#pragma multi_compile_fog
-			//#pragma multi_compile _PATTERNMODE_ADD _PATTERNMODE_ALPHA
+
 			#pragma vertex CHVertBase
 			#pragma fragment CHFragBase
 			#include "UnityCG.cginc"
@@ -107,36 +98,6 @@
 			#include "CHCore.cginc"
 			ENDCG
 		}	
-
-		/*
-		Pass
-		{
-
-			Tags {"LightMode" = "ForwardAdd" }
-			ColorMask RGBA
-			Blend One One
-			Fog { Color(0,0,0,0) }
-			ZWrite Off
-			ZTest LEqual
-
-			CGPROGRAM
-			#pragma target 3.0
-			#pragma only_renderers d3d11 glcore gles gles3 metal d3d9
-			#pragma multi_compile_fwdbase nolightmap nodirlightmap nodynlightmap novertexlight
-
-			#pragma vertex CustomvertAdd
-			#pragma fragment CustomfragAdd
-			#pragma multi_compile _RECEIVESHADOW
-			#pragma multi_compile _SOFTSHADOW
-
-			#include "UnityCG.cginc"
-			#include "AutoLight.cginc"
-			#include "CHCore.cginc"
-			ENDCG
-		}
-		*/
 	}
-	//FallBack "Legacy Shaders/Override/Diffuse"
-	//CustomEditor "CHCoreGUI"
 }
 

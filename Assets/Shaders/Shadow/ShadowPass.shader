@@ -4,9 +4,6 @@
     {
         _MainTex     ("Texture", 2D) = "white" {}
         _Cutoff      ("Alpha Cutoff", Range(0.0, 1.0)) = 0.5
-        
-        //[Enum(UnityEngine.Rendering.ColorWriteMask)]
-        //_CascadeMask ("Cascade Mask", Int) = 0
     }
     SubShader
     {

@@ -21,14 +21,6 @@
 		_WaterSpeed("NormalSpeed",vector) = (1,1,0,0)
 		_Water2Speed("Normal2Speed",vector) = (1,1,0,0)
 
-		//[Header(Lightmap)]
-		//_Lightmap("Lightmap", 2D) = "white" {}
-		//_DesaturateLightmap("Desaturate Lightmap", Range(-2 , 2)) = 0
-
-		//[Header(Shadow)]
-		//_ShadowColor("ShadowColor (RGB)", Color) = (0.5,0.5,0.5,1)
-		//_ShadowDistance("ShadowDistance",float) = 20
-		//_ShadowFade("ShadowFade",Range(0.1,1)) = 0.1
 		[Enum(Zero,0,One,1,DstColor,2,SrcAlpha,5)]  _SrcBlend("SrcFactor",Int) = 5
 		[Enum(Zero,0,One,1,OneMinusSrcAlpha,10)]  _DstBlend("DstFactor",Int) = 10
 	}
@@ -36,8 +28,7 @@
 	SubShader
 	{ 
 		Tags{ "RenderType" = "Transparent"  "Queue" = "Transparent"}
-		//Cull off
-		//Blend SrcAlpha OneMinusSrcAlpha
+
 		ZWrite Off
 		Blend[_SrcBlend][_DstBlend]
 	
@@ -47,10 +38,8 @@
 			CGPROGRAM
 			#pragma target 3.0
 
-			//#pragma multi_compile_fwdadd_fullshadows
 			#pragma multi_compile_fog
 
-			//#pragma multi_compile _LIGHTMAP
 			#pragma multi_compile _USENORMAL
 			#pragma multi_compile _ HIGH_LEVEL_WATER
 
@@ -59,7 +48,7 @@
 
 			#include "AutoLight.cginc"
 			#include "UnityCG.cginc"
-			#include "../Fog/FogCore.cginc"
+			#include "../cginc/FogCore.cginc"
 
 			//Variants
 			float _Shadow;
@@ -71,8 +60,6 @@
 			float4 _VertexSpeed; 
 			float4 _WaterSpeed,_Water2Speed;
 
-			//UNITY_DECLARE_TEX2D(_Lightmap);
-			//float _DesaturateLightmap;
 
 			float _Shininess;
 
@@ -87,11 +74,7 @@
 			float4 _RelfColor;
 			float4 _LightColor0;
 			float4 _SpecColor;
-			//float4 _ShadowColor;
-			//float _ShadowDistance,_ShadowFade;
 
-
-			//in
 			struct CustomVertexInput
 			{
 				float4 vertex   : POSITION;
@@ -109,9 +92,7 @@
 				UNITY_POSITION(pos);
 				float4 uv                                : TEXCOORD0;    //VertexUV.xy
 				float4 tangentToWorldAndPackedData[3]   : TEXCOORD1;    // [3x3:tangentToWorld | 1x3:viewDirForParallax or worldPos]
-				//UNITY_FOG_COORDS(4)
 				half fogCoord	: TEXCOORD4;
-				//UNITY_SHADOW_COORDS(5)
 				float4 color								: COLOR;
 			};
 
@@ -134,11 +115,8 @@
 			{ 
 				UNITY_SETUP_INSTANCE_ID(v);  
 				CustomVertexOutputForwardBase o;
-				//UNITY_INITIALIZE_OUTPUT(CustomVertexOutputForwardBase, o);
-				//UNITY_TRANSFER_INSTANCE_ID(v, o);
 
 				float waveh = cos(sin((_VertexSpeed.x*v.vertex.x + v.vertex.z*_VertexSpeed.y)*(_Time.x*_VertexSpeed.z))) *_VertexSpeed.w - (_VertexSpeed.w*0.55);
-				//v.vertex.y += waveh;
 				 
 				float4 posWorld = mul(unity_ObjectToWorld, v.vertex);
 				o.tangentToWorldAndPackedData[0].w = posWorld.x; 
@@ -165,11 +143,6 @@
 #else
 				o.color = float4(1, 1, 1, 1);//v.color;
 #endif
-				//o.color.a *= saturate(waveh);
-				//TRANSFER_SHADOW(o);
-				//UNITY_TRANSFER_FOG(o, o.pos);
-
-				//o.fogCoord = saturate(distance(_WorldSpaceCameraPos.xyz, abs( posWorld.xyz))*0.0006);
 				o.fogCoord = GetFogCoord(o.pos, posWorld);
 				return o;
 			}
@@ -198,8 +171,6 @@
 				float3 norDir = tangent * unpackNor.x + binormal * unpackNor.y + i.tangentToWorldAndPackedData[2].xyz * unpackNor.z;
 				float3 softnorDir = lerp(i.tangentToWorldAndPackedData[2].xyz,norDir, _RelfNormal);
 				norDir = lerp(i.tangentToWorldAndPackedData[2].xyz, norDir, _Normal);
-				//norDir = saturate(norDir);
-				//softnorDir = saturate(softnorDir);
 				//dir
 				float3 posWorld = float3(i.tangentToWorldAndPackedData[0].w, i.tangentToWorldAndPackedData[1].w, i.tangentToWorldAndPackedData[2].w);
 				float NoL = saturate(dot(softnorDir, _WorldSpaceLightPos0.xyz));
@@ -210,20 +181,6 @@
 				float NoV = saturate(dot(softnorDir, viewDir));
 				float3 specularTerm = pow(NoH, 128 * _Shininess)*_SpecColor;
 
-				//lm
-				/*
-				float4 lmoffset = float4(43.38, 43.43, 3.34, -1.97);
-				float2 lmUV = i.uv.xy * lmoffset.xy*0.00001 + lmoffset.zw*0.0001;
-				float4 lightmap = UNITY_SAMPLE_TEX2D(_Lightmap, lmUV);
-				float lmshadow = dot(lightmap.rgb, float3(0.299, 0.587, 0.114));
-				float3 lmcolor = lerp(lightmap.rgb, lmshadow.xxx, _DesaturateLightmap);
-				*/
-				//lmcolor = saturate(lmcolor);
-
-				//shadow
-				//float ReceiveShadow = SHADOW_ATTENUATION(i);
-				//ReceiveShadow = saturate(lerp(ReceiveShadow, 1.0, (distance(posWorld.xyz, _WorldSpaceCameraPos.xyz) - _ShadowDistance) * _ShadowFade));
-				//float3 ShadowColor = ReceiveShadow + (1 - ReceiveShadow)*_ShadowColor.rgb;
 
 				//Fresnel
 				float Fresnel = pow(1.0 - NoV, 2.8)*0.9 + 0.1;
@@ -234,7 +191,6 @@
 
 				//fianl
 				float3 sAlbedo = _TintColor.rgb;
-				//sAlbedo *= lmcolor;
 
 				float3 finalColor = lerp(sAlbedo * NoL, reflspec* _RelfColor.rgb, Fresnel);
 
@@ -243,17 +199,10 @@
 
 				float finalAlpha = i.color.a * _TintColor.a;
 
-				//UNITY_APPLY_FOG(i.fogCoord, finalColor.rgb);
-				//finalColor.rgb = lerp(finalColor.rgb, unity_FogColor.rgb, i.fogCoord);
-				//float fogcoord = distance(_WorldSpaceCameraPos.xyz, posWorld.xyz) * 0.00036;
 				finalColor = ApplySunFog(finalColor.rgb, i.fogCoord, viewDir);
-
-				//finalColor = finalColor;
-				//finalAlpha = 1;
 				return saturate(float4(finalColor, finalAlpha));
 			}			
 			ENDCG
 		}	
 	}
-//FallBack "Legacy Shaders/Override/VertexLit"
 }

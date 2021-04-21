@@ -3,8 +3,6 @@
 	Properties
 	{
 		[Space(20)]
-		//_ColorE("Color+E", 2D) = "white" {}
-		//_SMMS("SMMS", 2D) = "white" {}
 		_NormalTex("Normal", 2D) = "bump" {}
 		_MainTex ("MainTex", 2D) = "white" {}
 
@@ -38,11 +36,6 @@
 			#pragma only_renderers d3d11 glcore gles gles3 metal d3d9
 
 			#pragma multi_compile_fog
-
-			//#pragma multi_compile _ _SKINMASK
-			//#pragma multi_compile _ _SKINADDCOLOR
-			//#pragma multi_compile _ _SKINPATTERN
-			//#pragma multi_compile _PATTERNMODE_ADD _PATTERNMODE_ALPHA
 
 			#pragma vertex vert
 			#pragma fragment frag
@@ -159,33 +152,6 @@
 			}
 			ENDCG
 		}
-			/*
-		Pass
-		{
 
-			Tags {"LightMode" = "ForwardAdd" }
-			ColorMask RGBA
-			Blend One One
-			Fog { Color(0,0,0,0) }
-			ZWrite Off
-			ZTest LEqual
-
-			CGPROGRAM
-			#pragma target 3.0
-			#pragma only_renderers d3d11 glcore gles gles3 metal d3d9
-			#pragma multi_compile_fwdbase nolightmap nodirlightmap nodynlightmap novertexlight
-
-			#pragma vertex CustomvertAdd
-			#pragma fragment CustomfragAdd
-			#pragma multi_compile _ _RECEIVESHADOW
-			#pragma multi_compile _ _SOFTSHADOW
-
-			#include "UnityCG.cginc"
-			#include "AutoLight.cginc"
-			#include "CHCore.cginc"
-			ENDCG
-		}
-		*/
 	}
-//FallBack "Legacy Shaders/Override/Diffuse"
 }

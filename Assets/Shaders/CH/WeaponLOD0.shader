@@ -3,15 +3,12 @@
 	Properties
 	{
 		_OwnerLightAmbient("环境光颜色", Color) = (0.1,0.1, 0.2, 1)
-		//_SkinColor("表皮肤色", Color) = (0.6,0.54,0.5,1)
-		//_SkinDeepColor("真皮透光颜色", Color) = (0.691,0.267,0.142,1)
 		_EmissiveColor("自发光颜色", Color) = (1,1,1,1)
 
 		[Header((Mask))]
 		_Gloss("光滑度补偿", Range(0.0, 2.0)) = 1
 		_Metal("金属补偿", Range(0.0, 2.0)) = 1
 		_EnvMin("环境光下限值",Range(0,0.5)) = 0.1
-		//_SKin("皮肤补偿", Range(0, 2.0)) = 1
 
 		[Header((Saturation))]
 		_ColorfulAll("整体饱和度", Range(0.0, 2.0)) = 1
@@ -24,18 +21,11 @@
 		_AmbientLight("环境光", Range(0,2)) = 1
 		_CubeIntensity("环境反光", Range(0,2)) = 1
 
-		//_Rotation("旋转Cubemap", Range(-360,360)) = 0
-
-		//[Header((Rim))]
-		//_RimLight("贴图边缘光", Range(0,2)) = 1
-
 		[Header((Shadow))]
 		_ShadowIntensity("阴影强度", Range(0, 1)) = 0.5
 		_SelfShadowSize("阴影范围", Range(0, 1)) = 0.1
 		_SelfShadowHardness("阴影硬度", Range(0, 1)) = 0.55
 		_AO("AO", Range(0, 2)) = 0.5
-		//_MaskModeHeight("渐变", Range(0.0, 2.0)) = 1
-		//_MaskVector("渐变方向",Vector) = (0,0,0,1)
 
 		[Header((Option))]
 		[Toggle] _ANiEmi("循环自发光动画",float) = 0
@@ -46,8 +36,6 @@
 		_SMMS("SMMS", 2D) = "white" {}
 		_Normal("Normal", 2D) = "bump" {}
 		_NormalScale("Normal Scale", Range(0, 1)) = 1
-		//_ReflTex("ReflTex",CUBE) = "white" {}
-		//_MatcapTex("MatcapTex",2D) = "black" {}
 
 		[HideInInspector] _PatternMaskTex("PatternMaskTex",2D) = "black" {}
 		[HideInInspector] _PatternColor1("PatternColor1", Color) = (1,1,1,1)

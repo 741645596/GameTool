@@ -76,9 +76,7 @@
 			CGPROGRAM
 			#pragma target 3.0
 			#pragma only_renderers d3d11 glcore gles gles3 metal d3d9
-			//#pragma multi_compile_fwdbase nolightmap nodirlightmap nodynlightmap novertexlight
 
-			//#pragma multi_compile _WEAPONDISPLAY
 			#pragma multi_compile __ _SKINMASK
 			#pragma multi_compile __ _SKINADDCOLOR
 			#pragma multi_compile __ _SKINPATTERN
